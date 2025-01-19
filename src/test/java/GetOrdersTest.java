@@ -1,5 +1,6 @@
 import api.OrderAPI;
 import api.UserAPI;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import model.UserData;
 import model.UserGenerator;
@@ -30,10 +31,10 @@ public class GetOrdersTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Get orders fpr authorized user")
     public void canGetOrdersForUserTest() {
         userData = UserGenerator.getRandomUser();
-        ValidatableResponse response = userAPI.createUser(userData)
-                .log().all();
+        ValidatableResponse response = userAPI.createUser(userData);
 
         accessToken = response.extract().path(UserAPI.ACCESS_TOKEN_FIELD);
         refreshToken = response.extract().path(UserAPI.REFRESH_TOKEN_FIELD);
@@ -48,10 +49,10 @@ public class GetOrdersTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Get orders for unauthorized user")
     public void cannotGetOrdersWithoutAuthorizationTest() {
         userData = UserGenerator.getRandomUser();
-        ValidatableResponse response = userAPI.createUser(userData)
-                .log().all();
+        ValidatableResponse response = userAPI.createUser(userData);
 
         accessToken = response.extract().path(UserAPI.ACCESS_TOKEN_FIELD);
         refreshToken = response.extract().path(UserAPI.REFRESH_TOKEN_FIELD);
